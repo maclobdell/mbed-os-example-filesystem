@@ -18,9 +18,11 @@
 #include <errno.h>
 
 #include "BlockDevice.h"
+#include "SDIOBlockDevice.h"
 
 // This will take the system's default block device
-BlockDevice *bd = BlockDevice::get_default_instance();
+//BlockDevice *bd = BlockDevice::get_default_instance();
+BlockDevice *bd = new SDIOBlockDevice();
 
 // Instead of the default block device, you can define your own block device.
 // For example: HeapBlockDevice with size of 2048 bytes, read size 1, write size 1 and erase size 512.
@@ -38,7 +40,9 @@ LittleFileSystem fs("fs");
 
 
 // Set up the button to trigger an erase
-InterruptIn irq(BUTTON1);
+//InterruptIn irq(BUTTON1);
+InterruptIn irq(SW2);
+
 void erase() {
     printf("Initializing the block device... ");
     fflush(stdout);
@@ -220,4 +224,3 @@ int main() {
         
     printf("Mbed OS filesystem example done!\n");
 }
-
